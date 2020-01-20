@@ -10,6 +10,8 @@
         <local:airplanesDataSet x:Key="airplanesDataSet"/>
         <CollectionViewSource x:Key="cyanairScheduleExtendedViewSource" Source="{Binding CyanairScheduleExtended, Source={StaticResource airplanesDataSet}}"/>
         <CollectionViewSource x:Key="cyanairReservationViewSource" Source="{Binding CyanairReservation, Source={StaticResource airplanesDataSet}}"/>
+        <local:airplanesDataSet1 x:Key="airplanesDataSet1"/>
+        <CollectionViewSource x:Key="cyanairReservationViewSource1" Source="{Binding CyanairReservation, Source={StaticResource airplanesDataSet1}}"/>
     </Window.Resources>
     <Grid  DataContext="{StaticResource cyanairScheduleExtendedViewSource}">
         <ComboBox x:Name="departuresBox" HorizontalAlignment="Left" Margin="106,47,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="DeparturesBox_SelectionChanged"/>
@@ -18,13 +20,13 @@
         <RadioButton x:Name="economyRadio" Content="RadioButton" HorizontalAlignment="Left" Margin="89,141,0,0" VerticalAlignment="Top" Checked="EconomyRadio_Checked"/>
         <RadioButton x:Name="businessRadio" Content="RadioButton" HorizontalAlignment="Left" Margin="89,180,0,0" VerticalAlignment="Top"/>
         <RadioButton x:Name="firstRadio" Content="RadioButton" HorizontalAlignment="Left" Margin="89,221,0,0" VerticalAlignment="Top"/>
-        <DataGrid x:Name="tableView" HorizontalAlignment="Left" Height="193" Margin="196,297,0,0" VerticalAlignment="Top" Width="575" ItemsSource="{Binding Source={StaticResource cyanairReservationViewSource}}"/>
+        <DataGrid x:Name="tableView" HorizontalAlignment="Left" Height="193" Margin="196,297,0,0" VerticalAlignment="Top" Width="575" ItemsSource="{Binding Source={StaticResource cyanairReservationViewSource1}}"/>
         <Button Content="Button" HorizontalAlignment="Left" Margin="699,236,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
-        <TextBox x:Name="passengerName" HorizontalAlignment="Left" Height="23" Margin="328,139,0,0" TextWrapping="Wrap" Text="Passenger Name" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="passengerName" HorizontalAlignment="Left" Height="23" Margin="328,139,0,0" TextWrapping="Wrap" Text="Passenger Name" VerticalAlignment="Top" Width="120" KeyUp="passengerName_KeyUp"/>
         <TextBox x:Name="passportNo" HorizontalAlignment="Left" Height="23" Margin="328,180,0,0" TextWrapping="Wrap" Text="Passport Number" VerticalAlignment="Top" Width="120"/>
         <Label Content="Label" HorizontalAlignment="Left" Margin="253,139,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.239,0.017"/>
         <Label Content="Label" HorizontalAlignment="Left" Margin="253,180,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="createBooking" Content="Button" HorizontalAlignment="Left" Margin="373,219,0,0" VerticalAlignment="Top" Width="75" Click="CreateBooking_Click"/>
+        <Button x:Name="createBooking" Content="Create Booking" HorizontalAlignment="Left" Margin="352,219,0,0" VerticalAlignment="Top" Width="96" Click="CreateBooking_Click"/>
 
     </Grid>
 </Window>

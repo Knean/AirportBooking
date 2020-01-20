@@ -24,14 +24,25 @@ namespace AirportBooking
         public OleDbDataReader reader;
         public static List<ScheduleRow> scheduleRows;
         ScheduleRow selectedItem;
-        Reservation Reservation;
+        Reservation newReservation;
         public MainWindow()
         {
             
+            
             InitializeComponent();
-            Reservation = new Reservation();
+            newReservation = new Reservation();
+            
+          // subscribe to changes to the reservation object and check if it's valid
+            newReservation.changeChecker.changeMadeEvent += new ChangeChecker.changeMade(delegate ()
+            {
+                createBooking.IsEnabled = newReservation.isValid();
+            }); ;
+          
+
+
+          
             scheduleRows = new List<ScheduleRow>();
-            using (var conn = new OleDbConnection(@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=D:\Downloads\airplanes.accdb;" +
+            using (var conn = new OleDbConnection(@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + System.Environment.CurrentDirectory  + @"./airplanes.accdb;" +
                               "Persist Security Info = False;"))
             {
                 conn.Open();
@@ -77,8 +88,9 @@ namespace AirportBooking
 
             this.arrivingBox.ItemsSource = arrivalRows;
             this.arrivingBox.DisplayMemberPath = "Arriving";
-           
-            //MessageBox.Show(selectedItem.Departing); 
+            
+            newReservation.Departing = selectedItem.Departing;
+            
         }
 
         private void ArrivingBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -96,6 +108,7 @@ namespace AirportBooking
             
             this.timeBox.ItemsSource = timeRows;
             this.timeBox.DisplayMemberPath = "Date";
+            newReservation.Arriving = selectedItem.Arriving;
         }
 
         private void TimeBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -110,6 +123,7 @@ namespace AirportBooking
 
             int firstSeats = Convert.ToInt32(selectedItem.Economy);
             this.economyRadio.IsEnabled = firstSeats < 0 ? false : true;
+            newReservation.Time = selectedItem.Time;
 
         }
 
@@ -129,6 +143,12 @@ namespace AirportBooking
             airplanesDataSetCyanairReservationTableAdapter.Fill(airplanesDataSet.CyanairReservation);
             System.Windows.Data.CollectionViewSource cyanairReservationViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("cyanairReservationViewSource")));
             cyanairReservationViewSource.View.MoveCurrentToFirst();
+            AirportBooking.airplanesDataSet1 airplanesDataSet1 = ((AirportBooking.airplanesDataSet1)(this.FindResource("airplanesDataSet1")));
+            // Load data into the table CyanairReservation. You can modify this code as needed.
+            AirportBooking.airplanesDataSet1TableAdapters.CyanairReservationTableAdapter airplanesDataSet1CyanairReservationTableAdapter = new AirportBooking.airplanesDataSet1TableAdapters.CyanairReservationTableAdapter();
+            airplanesDataSet1CyanairReservationTableAdapter.Fill(airplanesDataSet1.CyanairReservation);
+            System.Windows.Data.CollectionViewSource cyanairReservationViewSource1 = ((System.Windows.Data.CollectionViewSource)(this.FindResource("cyanairReservationViewSource1")));
+            cyanairReservationViewSource1.View.MoveCurrentToFirst();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -140,32 +160,38 @@ namespace AirportBooking
 
         private void CreateBooking_Click(object sender, RoutedEventArgs e)
         {
-            /*
-            using (var conn = new OleDbConnection(@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=D:\Downloads\airplanes.accdb;" +
-                             "Persist Security Info = False;"))
+
+            using (var conn = new OleDbConnection(@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + System.Environment.CurrentDirectory + @"./airplanes.accdb;" +
+                              "Persist Security Info = False;"))
             {
                 conn.Open();
-                command = new OleDbCommand("INSERT INTO CyanairReservation (Departing, Arriving, Time, [Seat Class], [Passenger Full Name]) " +
-                    "VALUES (@Departing, @Arriving, @Time, @SeatClass, @PassengerName, @PassportNo)", conn);
-                command.Parameters.AddWithValue("Departing", selectedItem.Departing);
-                command.Parameters.AddWithValue("Arriving", selectedItem.Arriving);
-                command.Parameters.AddWithValue("Time", selectedItem.Time);
-                command.Parameters.AddWithValue("SeatClass", selectedItem.SeatClass);
-                command.Parameters.Add(new OleDbParameter("PassengerName", txtName.Text));
-                command.ExecuteNonQuery();
+                try
+                {
+                    //command = new OleDbCommand("INSERT INTO CyanairReservation (Departing, Arriving, [Time], [Seat Class], [Passenger Full Name], [Passport No]) " +
+                    //"VALUES (@Departing, @Arriving, @Time, @SeatClass, @PassengerName, @PassportNo)", conn);
+                    command = new OleDbCommand(@"INSERT INTO CyanairReservation ( Departing, Arriving, [Time], [Seat Class] )
+VALUES('test', 'test', 'test', 'test'); ", conn);
+                  
+                    command.ExecuteNonQuery();
+                }
+     catch(Exception ex)
+                {
+                    MessageBox.Show(ex.ToString());
+                }
 
-                command = new OleDbCommand("INSERT INTO PassengerSeats (PassengerID, SeatID) " +
-                    "SELECT MAX(PassengerID), 0 from Passengers", conn);
-                command.ExecuteNonQuery();
-
-                MessageBox.Show("Passenger " + txtName.Text + " was added to the waiting list",
-                    "Waiting List", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            } */
+              
+            } 
         }
 
         private void EconomyRadio_Checked(object sender, RoutedEventArgs e)
         {
-            Reservation.SeatClass = "Economy";
+            newReservation.SeatClass = "Economy";
+        }
+
+        private void passengerName_KeyUp(object sender, KeyEventArgs e)
+        {
+            TextBox box = sender as TextBox;
+            newReservation.PassengerName = box.Text;
         }
     }
 }

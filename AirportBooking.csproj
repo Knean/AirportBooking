@@ -55,6 +55,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="airplanesDataSet1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>airplanesDataSet1.xsd</DependentUpon>
+    </Compile>
     <Compile Include="compareDepartures.cs" />
     <Compile Include="Page1.xaml.cs">
       <DependentUpon>Page1.xaml</DependentUpon>
@@ -111,6 +116,17 @@
     </None>
     <None Include="airplanesDataSet.xss">
       <DependentUpon>airplanesDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="airplanesDataSet1.xsc">
+      <DependentUpon>airplanesDataSet1.xsd</DependentUpon>
+    </None>
+    <None Include="airplanesDataSet1.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>airplanesDataSet1.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="airplanesDataSet1.xss">
+      <DependentUpon>airplanesDataSet1.xsd</DependentUpon>
     </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
