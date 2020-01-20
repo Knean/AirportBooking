@@ -42,7 +42,7 @@ namespace AirportBooking
 
           
             scheduleRows = new List<ScheduleRow>();
-            using (var conn = new OleDbConnection(@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + System.Environment.CurrentDirectory  + @"./airplanes.accdb;" +
+            using (var conn = new OleDbConnection(@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + System.IO.Directory.GetParent(System.IO.Directory.GetParent( System.Environment.CurrentDirectory).FullName) + @"/airplanes2.accdb;" +
                               "Persist Security Info = False;"))
             {
                 conn.Open();
@@ -131,24 +131,7 @@ namespace AirportBooking
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            NavigationService ns = NavigationService.GetNavigationService(this);
-            AirportBooking.airplanesDataSet airplanesDataSet = ((AirportBooking.airplanesDataSet)(this.FindResource("airplanesDataSet")));
-            // Load data into the table CyanairScheduleExtended. You can modify this code as needed.
-            AirportBooking.airplanesDataSetTableAdapters.CyanairScheduleExtendedTableAdapter airplanesDataSetCyanairScheduleExtendedTableAdapter = new AirportBooking.airplanesDataSetTableAdapters.CyanairScheduleExtendedTableAdapter();
-            airplanesDataSetCyanairScheduleExtendedTableAdapter.Fill(airplanesDataSet.CyanairScheduleExtended);
-            System.Windows.Data.CollectionViewSource cyanairScheduleExtendedViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("cyanairScheduleExtendedViewSource")));
-            cyanairScheduleExtendedViewSource.View.MoveCurrentToFirst();
-            // Load data into the table CyanairReservation. You can modify this code as needed.
-            AirportBooking.airplanesDataSetTableAdapters.CyanairReservationTableAdapter airplanesDataSetCyanairReservationTableAdapter = new AirportBooking.airplanesDataSetTableAdapters.CyanairReservationTableAdapter();
-            airplanesDataSetCyanairReservationTableAdapter.Fill(airplanesDataSet.CyanairReservation);
-            System.Windows.Data.CollectionViewSource cyanairReservationViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("cyanairReservationViewSource")));
-            cyanairReservationViewSource.View.MoveCurrentToFirst();
-            AirportBooking.airplanesDataSet1 airplanesDataSet1 = ((AirportBooking.airplanesDataSet1)(this.FindResource("airplanesDataSet1")));
-            // Load data into the table CyanairReservation. You can modify this code as needed.
-            AirportBooking.airplanesDataSet1TableAdapters.CyanairReservationTableAdapter airplanesDataSet1CyanairReservationTableAdapter = new AirportBooking.airplanesDataSet1TableAdapters.CyanairReservationTableAdapter();
-            airplanesDataSet1CyanairReservationTableAdapter.Fill(airplanesDataSet1.CyanairReservation);
-            System.Windows.Data.CollectionViewSource cyanairReservationViewSource1 = ((System.Windows.Data.CollectionViewSource)(this.FindResource("cyanairReservationViewSource1")));
-            cyanairReservationViewSource1.View.MoveCurrentToFirst();
+  
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -161,8 +144,8 @@ namespace AirportBooking
         private void CreateBooking_Click(object sender, RoutedEventArgs e)
         {
 
-            using (var conn = new OleDbConnection(@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + System.Environment.CurrentDirectory + @"./airplanes.accdb;" +
-                              "Persist Security Info = False;"))
+            using (var conn = new OleDbConnection(@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + System.IO.Directory.GetParent(System.IO.Directory.GetParent(System.Environment.CurrentDirectory).FullName) + @"/airplanes2.accdb;" +
+                                "Persist Security Info = False;"))
             {
                 conn.Open();
                 try
