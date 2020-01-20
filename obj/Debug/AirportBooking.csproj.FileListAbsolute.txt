@@ -1,11 +1,9 @@
-D:\Downloads\1210-LinqToSQL\LinqToSQL\AirportBooking\bin\Debug\airplanes.accdb
 D:\Downloads\1210-LinqToSQL\LinqToSQL\AirportBooking\bin\Debug\AirportBooking.exe.config
 D:\Downloads\1210-LinqToSQL\LinqToSQL\AirportBooking\bin\Debug\AirportBooking.exe
 D:\Downloads\1210-LinqToSQL\LinqToSQL\AirportBooking\bin\Debug\AirportBooking.pdb
 D:\Downloads\1210-LinqToSQL\LinqToSQL\AirportBooking\obj\Debug\AirportBooking.csprojAssemblyReference.cache
 D:\Downloads\1210-LinqToSQL\LinqToSQL\AirportBooking\obj\Debug\MainWindow.g.cs
 D:\Downloads\1210-LinqToSQL\LinqToSQL\AirportBooking\obj\Debug\App.g.cs
-D:\Downloads\1210-LinqToSQL\LinqToSQL\AirportBooking\obj\Debug\AirportBooking_Content.g.cs
 D:\Downloads\1210-LinqToSQL\LinqToSQL\AirportBooking\obj\Debug\AirportBooking_MarkupCompile.cache
 D:\Downloads\1210-LinqToSQL\LinqToSQL\AirportBooking\obj\Debug\AirportBooking_MarkupCompile.lref
 D:\Downloads\1210-LinqToSQL\LinqToSQL\AirportBooking\obj\Debug\MainWindow.baml
