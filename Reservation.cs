@@ -14,6 +14,7 @@ namespace AirportBooking
         private string _Time;
         private string _PassengerName;
         private string _PassportNo;
+        private int _Reference;
 
 // all setters fire a changeMade event
         public string Departing {
@@ -71,16 +72,29 @@ namespace AirportBooking
         {
             get;set;
         }
-
+        public int Reference { get {
+                createReference();
+                return _Reference; } }
+        private void createReference()
+        {
+            if (this.isValid())
+            {
+                Random random = new Random();
+                string validString = this.PassengerName + this._Departing + this._Arriving + random.Next().ToString();
+                _Reference = validString.GetHashCode();
+            }
+            else
+            {
+                this._Reference = 0;
+            }
+            // MessageBox.Show("it's been edited");
+        }
         public ChangeChecker changeChecker = new ChangeChecker();
 
         public Reservation()
         {
-            void showMessage()
-            {
-                MessageBox.Show("it's been edited");
-            }
-           // changeChecker.changeMadeEvent += showMessage;
+       
+          changeChecker.changeMadeEvent += createReference;
         }
         public bool isValid()
         {           

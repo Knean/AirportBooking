@@ -18,8 +18,8 @@
         <ComboBox x:Name="arrivingBox" HorizontalAlignment="Left" Margin="304,47,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="ArrivingBox_SelectionChanged"/>
         <ComboBox x:Name="timeBox" HorizontalAlignment="Left" Margin="486,47,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="TimeBox_SelectionChanged"/>
         <RadioButton x:Name="economyRadio" Content="RadioButton" HorizontalAlignment="Left" Margin="89,141,0,0" VerticalAlignment="Top" Checked="EconomyRadio_Checked"/>
-        <RadioButton x:Name="businessRadio" Content="RadioButton" HorizontalAlignment="Left" Margin="89,180,0,0" VerticalAlignment="Top"/>
-        <RadioButton x:Name="firstRadio" Content="RadioButton" HorizontalAlignment="Left" Margin="89,221,0,0" VerticalAlignment="Top"/>
+        <RadioButton x:Name="businessRadio" Content="RadioButton" HorizontalAlignment="Left" Margin="89,180,0,0" VerticalAlignment="Top" Checked="businessRadio_Checked"/>
+        <RadioButton x:Name="firstRadio" Content="RadioButton" HorizontalAlignment="Left" Margin="89,221,0,0" VerticalAlignment="Top" Checked="firstRadio_Checked"/>
         <Button Content="Button" HorizontalAlignment="Left" Margin="699,236,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
         <TextBox x:Name="passengerName" HorizontalAlignment="Left" Height="23" Margin="328,139,0,0" TextWrapping="Wrap" Text="Passenger Name" VerticalAlignment="Top" Width="120" KeyUp="passengerName_KeyUp"/>
         <TextBox x:Name="passportNo" HorizontalAlignment="Left" Height="23" Margin="328,180,0,0" TextWrapping="Wrap" Text="Passport Number" VerticalAlignment="Top" Width="120"/>

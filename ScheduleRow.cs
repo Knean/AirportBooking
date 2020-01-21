@@ -17,6 +17,8 @@ namespace AirportBooking
         public string Economy { get; set; }
         public string Business { get; set; }
         public string Duration { get; set; }
+        public string DepartingName { get; set; }
+        public string ArrivingName { get; set; }
   
     }
 

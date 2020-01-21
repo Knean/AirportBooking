@@ -16,7 +16,6 @@ D:\Downloads\1210-LinqToSQL\LinqToSQL\AirportBooking\obj\Debug\AirportBooking.pd
 D:\Downloads\1210-LinqToSQL\LinqToSQL\AirportBooking\obj\Debug\Page1.g.cs
 D:\Downloads\1210-LinqToSQL\LinqToSQL\AirportBooking\obj\Debug\Page1.baml
 D:\Downloads\1210-LinqToSQL\LinqToSQL\AirportBooking\obj\Debug\GeneratedInternalTypeHelper.g.cs
-C:\Users\RM281Admin\Downloads\airportRepo\bin\Debug\airplanes.accdb
 C:\Users\RM281Admin\Downloads\airportRepo\bin\Debug\AirportBooking.exe.config
 C:\Users\RM281Admin\Downloads\airportRepo\bin\Debug\AirportBooking.exe
 C:\Users\RM281Admin\Downloads\airportRepo\bin\Debug\AirportBooking.pdb
@@ -24,8 +23,6 @@ C:\Users\RM281Admin\Downloads\airportRepo\obj\Debug\AirportBooking.csprojAssembl
 C:\Users\RM281Admin\Downloads\airportRepo\obj\Debug\MainWindow.g.cs
 C:\Users\RM281Admin\Downloads\airportRepo\obj\Debug\Page1.g.cs
 C:\Users\RM281Admin\Downloads\airportRepo\obj\Debug\App.g.cs
-C:\Users\RM281Admin\Downloads\airportRepo\obj\Debug\AirportBooking_Content.g.cs
-C:\Users\RM281Admin\Downloads\airportRepo\obj\Debug\GeneratedInternalTypeHelper.g.cs
 C:\Users\RM281Admin\Downloads\airportRepo\obj\Debug\AirportBooking_MarkupCompile.cache
 C:\Users\RM281Admin\Downloads\airportRepo\obj\Debug\AirportBooking_MarkupCompile.lref
 C:\Users\RM281Admin\Downloads\airportRepo\obj\Debug\MainWindow.baml
