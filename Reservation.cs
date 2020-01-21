@@ -22,6 +22,8 @@ namespace AirportBooking
             set
             {
                 this._Departing = value;
+                this._Arriving = null;
+                this._Time = null;
                 changeChecker?.valueChanged();
             }
         }
@@ -31,6 +33,7 @@ namespace AirportBooking
             set
             {
                 this._Arriving = value;
+                this._Time = null;
                 changeChecker?.valueChanged();
             }
         }
@@ -111,8 +114,14 @@ namespace AirportBooking
             {
                 return true;
             }
-
         }
+
+        //public void reset()
+        //{
+        //    this._Arriving = null;
+        //    this._Departing = null;
+        //    this._PassengerName = null;
+        //}
 
     }
     public class ChangeChecker

@@ -25,10 +25,10 @@ namespace AirportBooking
         public static List<ScheduleRow> scheduleRows;
         public static List<Airport> AirportRows;
         ScheduleRow selectedItem;
+        //object soon to be inserted into the datatable
         Reservation newReservation;
         public MainWindow()
-        {           
-            
+        {          
             InitializeComponent();
             newReservation = new Reservation();
             scheduleRows = ConnectionObject.LoadScheduleRows();
@@ -39,63 +39,47 @@ namespace AirportBooking
             {
                 //disable the reservation button until all fields are valid
                 createBooking.IsEnabled = newReservation.isValid();
-            });
-            /*
-            var innerJoinQuery =
-    from schedule in scheduleRows
-    join airport in AirportRows on   schedule.dep equals airport.AirportCode
-    select new { ProductName = prod.Name, Category = category.Name }; */
-
+            });           
+            // get flights with distinct departures
             this.departuresBox.ItemsSource = scheduleRows.Distinct(new compareDepartures());
-            this.departuresBox.DisplayMemberPath = "DepartingName";         
-
-            
+            this.departuresBox.DisplayMemberPath = "DepartingName";
         }
   
         private void DeparturesBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ScheduleRow selectedItem =(ScheduleRow) this.departuresBox.SelectedItem;
-            
-            //filter the scheduleRows
+            ScheduleRow selectedItem =(ScheduleRow) this.departuresBox.SelectedItem;            
+            //find flights with matching departure field
             IEnumerable <ScheduleRow> arrivalRows = from flight in scheduleRows
-                                                   where flight.Departing == selectedItem.Departing
+                                                   where flight.Departing == selectedItem?.Departing
                                                    select flight;
-
             this.arrivingBox.ItemsSource = arrivalRows;
-            this.arrivingBox.DisplayMemberPath = "ArrivingName";
-            
-            newReservation.Departing = selectedItem.Departing;
-            
+            this.arrivingBox.DisplayMemberPath = "ArrivingName";            
+            newReservation.Departing = selectedItem?.Departing;            
         }
 
         private void ArrivingBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
             ScheduleRow selectedItem = (ScheduleRow)this.arrivingBox.SelectedItem;
+            //find flights with matching departure and arrival fields
             IEnumerable < ScheduleRow > timeRows = new ScheduleRow[] { };
-            if (selectedItem != null )
-            {
+         
                timeRows = from flight in scheduleRows
-                                                    where flight.Departing == selectedItem.Departing
-                                                    where flight.Arriving == selectedItem.Arriving
+                                                    where flight.Departing == selectedItem?.Departing
+                                                    where flight.Arriving == selectedItem?.Arriving
                                                     select flight;
-            }
-            
+                       
             this.timeBox.ItemsSource = timeRows;
-            this.timeBox.DisplayMemberPath = "Date";
-           
+            this.timeBox.DisplayMemberPath = "Date";           
             newReservation.Arriving = selectedItem?.Arriving;
             
         }
 
         private void TimeBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-            MessageBox.Show(this.timeBox.Text);
+        {           
             if (this.timeBox.SelectedItem != null)
             {
                 selectedItem = (ScheduleRow)this.timeBox.SelectedItem;
-                // disable buttons for unavailable seats
+                // disable radio buttons for unavailable seats
                 int businessSeats = Convert.ToInt32(selectedItem.Business);
                 this.businessRadio.IsEnabled = businessSeats < 0 ? false : true;
 
@@ -105,8 +89,7 @@ namespace AirportBooking
                 int firstSeats = Convert.ToInt32(selectedItem.Economy);
                 this.economyRadio.IsEnabled = firstSeats < 0 ? false : true;
                 newReservation.Time = selectedItem.Time;
-            }
-   
+            }   
 
         }
 
@@ -119,9 +102,7 @@ namespace AirportBooking
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Page1 page = new Page1(); 
-            
-            this.Content = page;
+         
         }
         private void EconomyRadio_Checked(object sender, RoutedEventArgs e)
         {
@@ -145,10 +126,25 @@ namespace AirportBooking
         private void CreateBooking_Click(object sender, RoutedEventArgs e)
         {
             ConnectionObject.CreateBooking(newReservation);
+            newReservation = new Reservation();
+            //reset the form fields
             this.passengerName.Text = null;
-            this.passportNo.Text = null;
-
+            this.passportNo.Text = null;           
+            this.passengerName.Text = null;
+            this.departuresBox.SelectedItem = null;
         }
 
+        private void passwordEntered(object sender, RoutedEventArgs e)
+        {
+            //password is seesharp
+            string secretPassword = "25935173";
+            string password = this.PasswordBox.SecurePassword.GetHashCode().ToString();
+            this.PasswordBox.Password = null;
+            if (password == secretPassword){                
+                Page flightsPage = new FlightsPage();
+                this.Content = flightsPage;
+            }
+        }
+        // everything under this is flight schedule logic
     }
 }
