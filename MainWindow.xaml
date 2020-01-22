@@ -26,7 +26,7 @@
         <Label Content="Label" HorizontalAlignment="Left" Margin="253,139,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.239,0.017"/>
         <Label Content="Label" HorizontalAlignment="Left" Margin="253,180,0,0" VerticalAlignment="Top"/>
         <Button x:Name="createBooking" Content="Create Booking" HorizontalAlignment="Left" Margin="352,219,0,0" VerticalAlignment="Top" Width="96" Click="CreateBooking_Click"/>
-        <PasswordBox x:Name="PasswordBox" HorizontalAlignment="Left" Margin="699,195,0,0" VerticalAlignment="Top" Width="75"/>
+        <PasswordBox x:Name="PasswordBox" HorizontalAlignment="Left" Margin="699,195,0,0" VerticalAlignment="Top" Width="75" KeyDown="PasswordBox_KeyDown"/>
 
     </Grid>
 </Window>

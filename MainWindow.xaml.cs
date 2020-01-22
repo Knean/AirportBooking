@@ -27,19 +27,25 @@ namespace AirportBooking
         ScheduleRow selectedItem;
         //object soon to be inserted into the datatable
         Reservation newReservation;
+        public void disableBookingButton()
+        {
+            //disable the reservation button until all fields are valid
+            createBooking.IsEnabled = newReservation.isValid();
+        }
         public MainWindow()
         {          
             InitializeComponent();
             newReservation = new Reservation();
             scheduleRows = ConnectionObject.LoadScheduleRows();
             AirportRows = ConnectionObject.LoadAirports();
-
             // subscribe to changes to the reservation object
-            newReservation.changeChecker.changeMadeEvent += new ChangeChecker.changeMade(delegate ()
-            {
-                //disable the reservation button until all fields are valid
-                createBooking.IsEnabled = newReservation.isValid();
-            });           
+            newReservation.changeChecker.changeMadeEvent += disableBookingButton;
+            //
+            //newReservation.changeChecker.changeMadeEvent += new ChangeChecker.changeMade(delegate ()
+            //{
+            //    
+            //    createBooking.IsEnabled = newReservation.isValid();
+            //});           
             // get flights with distinct departures
             this.departuresBox.ItemsSource = scheduleRows.Distinct(new compareDepartures());
             this.departuresBox.DisplayMemberPath = "DepartingName";
@@ -127,6 +133,7 @@ namespace AirportBooking
         {
             ConnectionObject.CreateBooking(newReservation);
             newReservation = new Reservation();
+            newReservation.changeChecker.changeMadeEvent += disableBookingButton;
             //reset the form fields
             this.passengerName.Text = null;
             this.passportNo.Text = null;           
@@ -137,14 +144,26 @@ namespace AirportBooking
         private void passwordEntered(object sender, RoutedEventArgs e)
         {
             //password is seesharp
-            string secretPassword = "25935173";
-            string password = this.PasswordBox.SecurePassword.GetHashCode().ToString();
+            string secretPassword = "1463063956";
+
+            string password = this.PasswordBox.Password.GetHashCode().ToString();
+            //MessageBox.Show((password == secretPassword).ToString());
             this.PasswordBox.Password = null;
             if (password == secretPassword){                
                 Page flightsPage = new FlightsPage();
                 this.Content = flightsPage;
             }
         }
+
+        private void PasswordBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if( e.Key == Key.Enter)
+            {
+                this.passwordEntered(sender, e);
+            }
+           
+        }
         // everything under this is flight schedule logic
+
     }
 }
