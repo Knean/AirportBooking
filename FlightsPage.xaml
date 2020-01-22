@@ -9,15 +9,21 @@
       Title="FlightsPage">
 
     <Grid>
-        <ComboBox x:Name="ArrivingBox" HorizontalAlignment="Left" Margin="80,113,0,0" VerticalAlignment="Top" Width="120"/>
-        <ComboBox HorizontalAlignment="Left" Margin="260,115,0,0" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.011,-0.198"/>
-        <DatePicker HorizontalAlignment="Left" Margin="466,113,0,0" VerticalAlignment="Top"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="71*"/>
+            <RowDefinition Height="19*"/>
+        </Grid.RowDefinitions>
+        <ComboBox x:Name="ArrivingBox" HorizontalAlignment="Left" Margin="80,113,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="ArrivingBox_SelectionChanged">
+            
+        </ComboBox>
+        <ComboBox x:Name="DepartingBox" HorizontalAlignment="Left" Margin="260,115,0,0" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.011,-0.198" SelectionChanged="ComboBox_SelectionChanged"/>
+        <DatePicker x:Name="dateControl" HorizontalAlignment="Left" Margin="466,113,0,0" VerticalAlignment="Top"/>
         <Label Content="Arriving" HorizontalAlignment="Left" Margin="95,80,0,0" VerticalAlignment="Top"/>
-        <Label Content="Label" HorizontalAlignment="Left" Margin="295,80,0,0" VerticalAlignment="Top"/>
+        <Label Content="Departing" HorizontalAlignment="Left" Margin="295,80,0,0" VerticalAlignment="Top"/>
         <Label Content="Date" HorizontalAlignment="Left" Margin="485,80,0,0" VerticalAlignment="Top"/>
         <Label Content="Other flights" HorizontalAlignment="Left" Margin="355,249,0,0" VerticalAlignment="Top"/>
         <Label Content="Hours and minutes somehow" HorizontalAlignment="Left" Margin="609,80,0,0" VerticalAlignment="Top"/>
-        <ListView x:Name="FlightsList" HorizontalAlignment="Left" Height="100" Margin="25,305,0,0" VerticalAlignment="Top" Width="765" SelectionChanged="FlightsList_SelectionChanged"  >
+        <ListView x:Name="FlightsList" Margin="0,305,280,44.6" SelectionChanged="FlightsList_SelectionChanged" Grid.RowSpan="2" HorizontalAlignment="Right" Width="395" AutomationProperties.IsColumnHeader="True"  >
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>

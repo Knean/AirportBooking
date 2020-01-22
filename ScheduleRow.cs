@@ -20,11 +20,15 @@ namespace AirportBooking
         public string DepartingName { get; set; }
         public string ArrivingName { get; set; }
         public string getString { get { return this.ToString(); } }
-        public override  string ToString()
+        public   override string ToString()
         {
             return $"From {this.DepartingName} flying to {this.ArrivingName} on: {Date} {Time}";
         }
-  
+        public ScheduleRow()
+        {
+
+        }
+
     }
 
   }
