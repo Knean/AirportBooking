@@ -26,7 +26,11 @@ namespace AirportBooking
         public static List<ScheduleRow> scheduleRows;
         public ScheduleRow selectedItem;
         IEnumerable<ScheduleRow> rows;
-
+        IEnumerable<ScheduleRow> departureRows;
+        IEnumerable<ScheduleRow> arrivalRows;
+        IEnumerable<ScheduleRow> listViewRows;
+        List<string> hours;
+        bool editMode;
 
         public FlightsPage()
         {
@@ -34,18 +38,26 @@ namespace AirportBooking
             InitializeComponent();
             selectedItem = new ScheduleRow();
             scheduleRows = ConnectionObject.LoadScheduleRows();
+            editMode = false;
+            //hours = new List<string> { "01",""
+            //this.hoursBox.ItemsSource = hours;
+            
 
             rows = from flight in scheduleRows
                    select flight;
+            arrivalRows = scheduleRows.Distinct(new compareArrivals());
+            departureRows = scheduleRows.Distinct(new compareDepartures());
+            listViewRows = from flight in scheduleRows
+                           select flight;
             // where flight.Departing == selectedItem?.Departing
-            
 
 
 
-            this.ArrivingBox.ItemsSource = rows;
+
+            this.ArrivingBox.ItemsSource = arrivalRows;
             this.ArrivingBox.DisplayMemberPath = "Arriving";
 
-            this.DepartingBox.ItemsSource = rows;
+            this.DepartingBox.ItemsSource = departureRows;
             this.DepartingBox.DisplayMemberPath = "Departing";
 
             GridView flightsGrid = new GridView();
@@ -65,7 +77,7 @@ namespace AirportBooking
             flightsGrid.Columns.Add(arrivalsColumn);
 
             GridViewColumn timeColumn = new GridViewColumn();
-            timeColumn.Header = "Arriving";
+            timeColumn.Header = "Time";
             //timeColumn.Width = 100;
             timeColumn.DisplayMemberBinding = new Binding("Time");
             flightsGrid.Columns.Add(timeColumn);
@@ -80,47 +92,155 @@ namespace AirportBooking
 
         void filterRows()
         {
-            
-           // MessageBox.Show(this.selectedItem.Departing.ToString() + selectedItem.Arriving.ToString());
-            if (selectedItem.Departing != null)
+
+            // MessageBox.Show(this.selectedItem.Departing.ToString() + selectedItem.Arriving.ToString());
+
+
+            if (selectedItem.Departing != null && selectedItem.Arriving ==null && editMode ==false)
             {
-                rows = rows.Where(flight => flight.Departing == selectedItem.Departing);
+                departureRows = rows.Where(flight => flight.Departing == selectedItem.Departing);
+                listViewRows = listViewRows.Where(flight => flight.Departing == selectedItem.Departing);
+
+                // MessageBox.Show("only flights with departure: " + selectedItem.Departing);
+                ////departureRows = rows.Where(flight => flight.Departing == selectedItem.Departing);
+                //listViewRows = listViewRows.Where(flight => flight.Departing == selectedItem.Departing);
+                //arrivalRows = scheduleRows.Distinct(new compareArrivals());
+                //if (selectedItem.Arriving == null)
+                //{
+                //    arrivalRows = rows.Where(flight => flight.Departing == selectedItem.Departing);
+                //}
+                //else
+                //{
+                //    listViewRows = listViewRows.Where(flight => flight.Departing == selectedItem.Departing);
+                //}
+            }
+            if(selectedItem.Departing == null && selectedItem.Arriving == null && editMode ==false)
+            {
+                departureRows = scheduleRows.Distinct(new compareDepartures());
+                arrivalRows = scheduleRows.Distinct(new compareArrivals());
+                listViewRows = from flight in scheduleRows
+                               select flight;
+            }
+            if (selectedItem.Departing != null && selectedItem.Arriving != null && editMode == false)
+            {
+                listViewRows = listViewRows.Where(flight => flight.Departing == selectedItem.Departing && flight.Arriving == selectedItem.Arriving);
+            }
+            // if we hacve arriving value
+            if (selectedItem.Arriving != null && selectedItem.Departing == null && editMode == false)
+            {
+                arrivalRows = rows.Where(flight => flight.Arriving == selectedItem.Arriving);
+                listViewRows = listViewRows.Where(flight => flight.Arriving == selectedItem.Arriving);
+                //// MessageBox.Show("only flights with arrival: " + selectedItem.Arriving ) ;
+                ////arrivalRows = rows.Where(flight => flight.Arriving == selectedItem.Arriving);
+                //departureRows = scheduleRows.Distinct(new compareDepartures());
+                //listViewRows = listViewRows.Where(flight => flight.Arriving == selectedItem.Arriving);
+                //// departureRows = listViewRows.Where(flight => flight.Arriving == selectedItem.Arriving);
+
+                ////if we have arriving value but not departing value
+                if (selectedItem.Departing == null)
+                {
+                    departureRows= rows.Where(flight => flight.Arriving == selectedItem.Arriving);
+                }
+                else
+                {
+
+                }
             }
 
-            if (selectedItem.Arriving != null)
-            {
-                MessageBox.Show(rows.FirstOrDefault().ToString()) ;
-                rows = rows.Where(flight => flight.Arriving == selectedItem.Arriving);
-            }
-            this.ArrivingBox.ItemsSource = rows;
-            this.DepartingBox.ItemsSource = rows;
+
+
+            this.ArrivingBox.ItemsSource = arrivalRows;
+            this.DepartingBox.ItemsSource = departureRows;//.Distinct(new compareDepartures());
+            this.FlightsList.ItemsSource = listViewRows;
         }
-        private void FlightsList_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            // MessageBox.Show(scheduleRows[0].Departing);
-            // ListView listBox = sender as ListView;
-            // ScheduleRow selected = listBox.SelectedItems[0] as ScheduleRow;
-            //this.ArrivingBox.SelectedItem ="what";
-            ScheduleRow selected = FlightsList.SelectedItem as ScheduleRow;
-            this.dateControl.SelectedDate = Convert.ToDateTime(selected.Time);
-        }
+
 
         private void ArrivingBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
            
             ScheduleRow selected = ArrivingBox.SelectedItem as ScheduleRow;
             //MessageBox.Show(selected.Arriving);
-            selectedItem.Arriving = null;
-            selectedItem.Arriving = selected?.Arriving;
-            MessageBox.Show(selectedItem.Arriving);
+           //selectedItem.Arriving = null;
+            selectedItem.Arriving = selected?.Arriving;           
             filterRows();
+            //this.DepartingBox.SelectedIndex = 2; //
+            
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ScheduleRow selected = DepartingBox.SelectedItem as ScheduleRow;
-            selectedItem.Departing = selected.Departing;
+            selectedItem.Departing = selected?.Departing;
             filterRows();
+        }
+
+        private void cancel_Click(object sender, RoutedEventArgs e)
+        {
+            listViewRows = from flight in scheduleRows
+                           select flight;
+            this.selectedItem = new ScheduleRow();
+
+           // this.DepartingBox.SelectedItem = DepartingBox.Items ;
+            this.FlightsList.SelectedItem = null;
+            this.DepartingBox.SelectedItem = null;
+            this.ArrivingBox.SelectedItem = null;
+            filterRows();
+        }
+
+       
+        private void FlightsList_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            MessageBox.Show(scheduleRows[0].Departing);
+            ListView listBox = sender as ListView;
+            ScheduleRow selected = listBox.SelectedItem as ScheduleRow;
+            if (selectedItem != null)
+            {
+                editMode = true;
+                DateTime selectedHours = Convert.ToDateTime(selected.Time);
+                MessageBox.Show(selectedHours.Minute.ToString());
+                this.minutesBox.Text = selectedHours.Minute.ToString();
+                this.hoursBox.Text = selectedHours.Hour.ToString();
+                //this.ArrivingBox.SelectedItem ="what";
+                // ScheduleRow selected = FlightsList.SelectedItem as ScheduleRow;
+                this.dateControl.SelectedDate = Convert.ToDateTime(selected.Time);
+               this.DepartingBox.SelectedIndex= departureRows.ToList().FindIndex(item => item.Departing == selected.Departing);
+                this.ArrivingBox.SelectedIndex = arrivalRows.ToList().FindIndex(item => item.Arriving == selected.Arriving);
+                this.delete.IsEnabled = true;
+            }
+
+        }
+
+        private void hoursBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void minutesBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void dateControl_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+           // MessageBox.Show("itworked");
+            addDate();
+            filterRows();
+        }
+
+        private void addDate()
+        {
+            try
+            {
+                DateTime datestring = Convert.ToDateTime(this.dateControl.SelectedDate);
+                datestring = datestring.AddHours(Convert.ToDouble(this.hoursBox.Text));
+                datestring = datestring.AddMinutes(Convert.ToDouble(this.minutesBox.Text));
+                
+                MessageBox.Show(datestring.ToString());
+            }
+            catch{
+                MessageBox.Show("enter valid date");
+                
+            }
         }
     }
 }

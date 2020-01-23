@@ -60,6 +60,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Airport.cs" />
+    <Compile Include="compareArrivals.cs" />
     <Compile Include="compareDepartures.cs" />
     <Compile Include="ConnectionObject.cs" />
     <Compile Include="FlightsPage.xaml.cs">
