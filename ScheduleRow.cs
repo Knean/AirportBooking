@@ -16,6 +16,7 @@ namespace AirportBooking
         public string Time { get; set; }
         public string Economy { get; set; }
         public string Business { get; set; }
+        public string First { get; set; }
         public string Duration { get; set; }
         public string DepartingName { get; set; }
         public string ArrivingName { get; set; }
@@ -29,6 +30,20 @@ namespace AirportBooking
 
         }
 
+        public bool isValid()
+        {
+            if(
+                this.Departing == null ||
+                this.Arriving == null||
+                this.Time == null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
     }
 
   }

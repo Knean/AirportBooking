@@ -20,8 +20,8 @@ namespace AirportBooking
                 conn.Open();
                 try
                 {
-                    command = new OleDbCommand("INSERT INTO CyanairReservation (Departing, Arriving, [Time], [Seat Class], [Passenger Full Name], [Passport No], [Booking reference]) " +
-                    "VALUES (@Departing, @Arriving, @Time, @SeatClass, @PassengerName, @PassportNo, @Reference)", conn);
+                    command = new OleDbCommand("INSERT INTO CyanairReservation (Departing, Arriving, [Time], [Seat Class], [Passenger Full Name], [Passport No], [Booking reference], [Flight No]) " +
+                    "VALUES (@Departing, @Arriving, @Time, @SeatClass, @PassengerName, @PassportNo, @Reference, @FlightIDVar)", conn);
                     command.Parameters.AddWithValue("Departing", newReservation.Departing);
                     command.Parameters.AddWithValue("Arriving", newReservation.Arriving);
                     command.Parameters.AddWithValue("Time", newReservation.Time);
@@ -29,6 +29,7 @@ namespace AirportBooking
                     command.Parameters.AddWithValue("PassengerName", newReservation.PassengerName);
                     command.Parameters.AddWithValue("PassportNo", "nopass");
                     command.Parameters.AddWithValue("Reference", newReservation.Reference);
+                    command.Parameters.AddWithValue("FlightIDVar", newReservation.FlightNo);
 
                     command.ExecuteNonQuery();
                 }
@@ -37,6 +38,46 @@ namespace AirportBooking
                     MessageBox.Show(ex.ToString());
                 }
 
+            }
+        }
+
+        public static void RemoveSeat(string seatClass, ScheduleRow flight)
+        {
+            OleDbCommand command;
+            int economy = Convert.ToInt32(flight.Economy);
+            int business = Convert.ToInt32(flight.Business);
+            int first = Convert.ToInt32(flight.First);
+
+            switch (seatClass)
+            {
+                case "Economy":
+                    economy= 0;
+                    break;
+                case "Business":
+                    business = 0;
+                    break;
+                case "FirstClass":
+                    first= 0;
+                    break;
+            }
+            using (var conn = new OleDbConnection(ConnectionObject.connectionString))
+            {
+                conn.Open();
+                try
+                {
+                    command = new OleDbCommand("UPDATE CyanairScheduleExtended SET [Economy] = @economyVar, Business = @businessVar, [First] = @firstVar WHERE ID = @flightNoVar", conn);
+                    command.Parameters.AddWithValue("economyVar", economy);
+                    command.Parameters.AddWithValue("businessVar",business);
+                    command.Parameters.AddWithValue("firstVar",first);
+                    command.Parameters.AddWithValue("flightNoVar", 1);      
+
+                    var mario = command.ExecuteNonQuery();
+                    MessageBox.Show(mario.ToString());
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString());
+                }
 
             }
         }
@@ -63,7 +104,9 @@ left join CyanairAirports air3 on air3.[Airport Codes] = schedule1.Arriving)";
                     scheduleRow.Time = reader["Time"].ToString();
                     scheduleRow.Economy = reader["Economy"].ToString();
                     scheduleRow.Business = reader["Business"].ToString();
+                    scheduleRow.First = reader["First"].ToString();
                     scheduleRow.Duration = reader["Duration"].ToString();
+                    
                     scheduleRow.ArrivingName = reader["ArrivingName"].ToString();
                     scheduleRow.DepartingName = reader["DepartingName"].ToString();
                     scheduleRows.Add(scheduleRow);

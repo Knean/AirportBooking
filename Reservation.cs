@@ -15,8 +15,18 @@ namespace AirportBooking
         private string _PassengerName;
         private string _PassportNo;
         private int _Reference;
+        private string _FlightNo;
 
 // all setters fire a changeMade event
+public string FlightNo
+        {
+            get { return this._FlightNo; }
+            set
+            {
+                this._FlightNo = value;             
+                changeChecker?.valueChanged();
+            }
+        }
         public string Departing {
             get { return _Departing; }
             set
@@ -75,9 +85,21 @@ namespace AirportBooking
         {
             get;set;
         }
-        public int Reference { get {
-                createReference();
-                return _Reference; } }
+        public int Reference { 
+            get {
+
+                if (this._Reference > 0)
+                {
+                    return _Reference;
+                }
+                else
+                {
+                    createReference();
+                    return _Reference;
+                }
+            }
+                
+        }
         private void createReference()
         {
             if (this.isValid())

@@ -87,14 +87,15 @@ namespace AirportBooking
                 selectedItem = (ScheduleRow)this.timeBox.SelectedItem;
                 // disable radio buttons for unavailable seats
                 int businessSeats = Convert.ToInt32(selectedItem.Business);
-                this.businessRadio.IsEnabled = businessSeats < 0 ? false : true;
+                this.businessRadio.IsEnabled = businessSeats ==0 ? false : true;
 
                 int economySeats = Convert.ToInt32(selectedItem.Economy);
-                this.economyRadio.IsEnabled = economySeats < 0 ? false : true;
+                this.economyRadio.IsEnabled = economySeats ==0 ?false : true;
 
-                int firstSeats = Convert.ToInt32(selectedItem.Economy);
-                this.economyRadio.IsEnabled = firstSeats < 0 ? false : true;
+                int firstSeats = Convert.ToInt32(selectedItem.First);
+                this.firstRadio.IsEnabled = firstSeats ==0 ? false : true;
                 newReservation.Time = selectedItem.Time;
+                newReservation.FlightNo = selectedItem.ID;
             }   
 
         }
@@ -131,7 +132,10 @@ namespace AirportBooking
         }
         private void CreateBooking_Click(object sender, RoutedEventArgs e)
         {
+            ScheduleRow flight = this.timeBox.SelectedItem as ScheduleRow;
             ConnectionObject.CreateBooking(newReservation);
+            ConnectionObject.RemoveSeat(newReservation.SeatClass, flight);
+            
             newReservation = new Reservation();
             newReservation.changeChecker.changeMadeEvent += disableBookingButton;
             //reset the form fields
@@ -139,6 +143,14 @@ namespace AirportBooking
             this.passportNo.Text = null;           
             this.passengerName.Text = null;
             this.departuresBox.SelectedItem = null;
+
+            //put them in a list do stuff for each of them
+
+            this.economyRadio.IsChecked = false;
+            this.businessRadio.IsChecked = false;
+            this.firstRadio.IsChecked = false;
+            
+            //connectionobject.removeseat(reservation)
         }
 
         private void passwordEntered(object sender, RoutedEventArgs e)

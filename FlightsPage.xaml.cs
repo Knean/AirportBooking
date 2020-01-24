@@ -145,33 +145,47 @@ namespace AirportBooking
                 {
 
                 }
+
+
+
+            }
+
+            if (editMode == true)
+            {
+                listViewRows = listViewRows.Where(flight => flight.ID == selectedItem.ID);
             }
 
 
 
             this.ArrivingBox.ItemsSource = arrivalRows;
+          
             this.DepartingBox.ItemsSource = departureRows;//.Distinct(new compareDepartures());
             this.FlightsList.ItemsSource = listViewRows;
+            if (editMode == true)
+            {
+                FlightsList.SelectedIndex = 0;
+            }
+
         }
 
 
         private void ArrivingBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-           
-            ScheduleRow selected = ArrivingBox.SelectedItem as ScheduleRow;
-            //MessageBox.Show(selected.Arriving);
-           //selectedItem.Arriving = null;
-            selectedItem.Arriving = selected?.Arriving;           
-            filterRows();
+
+            //ScheduleRow selected = ArrivingBox.SelectedItem as ScheduleRow;
+            //selectedItem.Arriving = selected?.Arriving;            
+            //filterRows();
             //this.DepartingBox.SelectedIndex = 2; //
+            somethingChanged();
             
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ScheduleRow selected = DepartingBox.SelectedItem as ScheduleRow;
-            selectedItem.Departing = selected?.Departing;
-            filterRows();
+            //ScheduleRow selected = DepartingBox.SelectedItem as ScheduleRow;
+            //selectedItem.Departing = selected?.Departing;
+            //filterRows();
+            somethingChanged();
         }
 
         private void cancel_Click(object sender, RoutedEventArgs e)
@@ -184,20 +198,24 @@ namespace AirportBooking
             this.FlightsList.SelectedItem = null;
             this.DepartingBox.SelectedItem = null;
             this.ArrivingBox.SelectedItem = null;
+            editMode = false;
+            this.create.IsEnabled = false;
+            this.update.IsEnabled = false;
             filterRows();
         }
 
        
         private void FlightsList_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            MessageBox.Show(scheduleRows[0].Departing);
+            //MessageBox.Show(scheduleRows[0].Departing);
             ListView listBox = sender as ListView;
             ScheduleRow selected = listBox.SelectedItem as ScheduleRow;
-            if (selectedItem != null)
+            if (selectedItem != null && selected != null)
             {
+                //change status
                 editMode = true;
                 DateTime selectedHours = Convert.ToDateTime(selected.Time);
-                MessageBox.Show(selectedHours.Minute.ToString());
+                //MessageBox.Show(selectedHours.Minute.ToString());
                 this.minutesBox.Text = selectedHours.Minute.ToString();
                 this.hoursBox.Text = selectedHours.Hour.ToString();
                 //this.ArrivingBox.SelectedItem ="what";
@@ -206,25 +224,34 @@ namespace AirportBooking
                this.DepartingBox.SelectedIndex= departureRows.ToList().FindIndex(item => item.Departing == selected.Departing);
                 this.ArrivingBox.SelectedIndex = arrivalRows.ToList().FindIndex(item => item.Arriving == selected.Arriving);
                 this.delete.IsEnabled = true;
+                selectedItem = selected;
+                this.update.IsEnabled = true;
+                this.create.IsEnabled = true;
+
+                filterRows();
             }
 
         }
 
         private void hoursBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-
+            somethingChanged();
         }
 
         private void minutesBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-
+            somethingChanged();
         }
 
         private void dateControl_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
-           // MessageBox.Show("itworked");
+            // MessageBox.Show("itworked");
+          
             addDate();
+            
+
             filterRows();
+
         }
 
         private void addDate()
@@ -234,13 +261,46 @@ namespace AirportBooking
                 DateTime datestring = Convert.ToDateTime(this.dateControl.SelectedDate);
                 datestring = datestring.AddHours(Convert.ToDouble(this.hoursBox.Text));
                 datestring = datestring.AddMinutes(Convert.ToDouble(this.minutesBox.Text));
+                selectedItem.Time = datestring.ToString();
                 
-                MessageBox.Show(datestring.ToString());
+               // MessageBox.Show(datestring.ToString());
             }
             catch{
                 MessageBox.Show("enter valid date");
                 
             }
+        }
+
+        private void somethingChanged()
+        {
+            ScheduleRow selected = new ScheduleRow();
+            //departure
+            if (selectedItem != null)
+            {
+                selected = DepartingBox.SelectedItem as ScheduleRow;
+                selectedItem.Departing = selected?.Departing;
+               
+                //arrival
+                selected = ArrivingBox.SelectedItem as ScheduleRow;
+                selectedItem.Arriving = selected?.Arriving;               
+
+                //date + time
+                addDate();
+
+                //if the temporary object is valid
+                if (selectedItem.isValid())
+                {
+                    this.create.IsEnabled = true;
+
+                    if(this.selectedItem.ID != null)
+                    {
+                        this.update.IsEnabled = true;
+                    }
+                }
+                filterRows();
+            }
+          
+
         }
     }
 }
