@@ -131,11 +131,96 @@ left join CyanairAirports air3 on air3.[Airport Codes] = schedule1.Arriving)";
                     Airport AirportItem = new Airport();
                     AirportItem.Description = reader["Descriptions"].ToString();
                     AirportItem.AirportCode = reader["Airport Codes"].ToString();
-                    Airports.Add(AirportItem);
+                    if (AirportItem.AirportCode != "")
+                    {
+                        Airports.Add(AirportItem);
+                    }
+                    
 
                 }
                 return Airports;
             }
+        }
+
+        public static void CreateFlight(ScheduleRow newFlight)
+        {
+            OleDbCommand command;
+            using (var conn = new OleDbConnection(ConnectionObject.connectionString))
+            {
+                conn.Open();
+                try
+                {
+                    command = new OleDbCommand("INSERT INTO CyanairScheduleExtended (Departing, Arriving, [Time], Economy, Business, [First]) " +
+                    "VALUES (@Departing, @Arriving, @Time, @Economy, @Business, @First)", conn);
+                    command.Parameters.AddWithValue("Departing", newFlight.Departing);
+                    command.Parameters.AddWithValue("Arriving", newFlight.Arriving);
+                    command.Parameters.AddWithValue("Time", newFlight.Time);
+                    command.Parameters.AddWithValue("Economy", "80");
+                    command.Parameters.AddWithValue("Business", "12");
+                    command.Parameters.AddWithValue("First", "8");
+
+                    int success =command.ExecuteNonQuery();
+                    MessageBox.Show(success.ToString());
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString());
+                }
+
+            }
+        }
+
+        public static ScheduleRow UpdateFlight(ScheduleRow flight)
+        {
+            OleDbCommand command;
+   
+            using (var conn = new OleDbConnection(ConnectionObject.connectionString))
+            {
+                conn.Open();
+                try
+                {
+                    command = new OleDbCommand("UPDATE CyanairScheduleExtended SET Departing= @departingVar, Arriving = @arrivingVar, [Time] = @timeVar, [Economy] = @economyVar, Business = @businessVar, [First] = @firstVar WHERE ID = @flightNoVar", conn);
+                    command.Parameters.AddWithValue("departingVar", flight.Departing);
+                    command.Parameters.AddWithValue("arrivingVar", flight.Arriving);
+                    command.Parameters.AddWithValue("timeVar", flight.Time);
+                    command.Parameters.AddWithValue("economyVar", 80);
+                    command.Parameters.AddWithValue("businessVar", 12);
+                    command.Parameters.AddWithValue("firstVar", 8);
+                    command.Parameters.AddWithValue("flightNoVar", flight.ID);
+
+                    var mario = command.ExecuteNonQuery();
+                    MessageBox.Show(mario.ToString());
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString());
+                }
+
+            }
+            return flight;
+        }
+
+        public static ScheduleRow RemoveFlight(ScheduleRow flight)
+        {
+            OleDbCommand command;
+            using (var conn = new OleDbConnection(ConnectionObject.connectionString))
+            {
+                conn.Open();
+                try
+                {
+                    command = new OleDbCommand("DELETE FROM CyanairScheduleExtended WHERE ID = @flightIDVar", conn);
+                    command.Parameters.AddWithValue("flightIDVar", flight.ID);
+
+                    var mario = command.ExecuteNonQuery();
+                    MessageBox.Show(mario.ToString());
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString());
+                }
+
+            }
+            return flight;
         }
     }
 }

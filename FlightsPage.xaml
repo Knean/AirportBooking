@@ -14,13 +14,13 @@
             <RowDefinition Height="71*"/>
             <RowDefinition Height="19*"/>
         </Grid.RowDefinitions>
-        <ComboBox x:Name="ArrivingBox" HorizontalAlignment="Left" Margin="80,113,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="ArrivingBox_SelectionChanged">
+        <ComboBox x:Name="ArrivingBox" HorizontalAlignment="Left" Margin="259,113,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="ArrivingBox_SelectionChanged">
 
         </ComboBox>
-        <ComboBox x:Name="DepartingBox" HorizontalAlignment="Left" Margin="260,115,0,0" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.011,-0.198" SelectionChanged="ComboBox_SelectionChanged"/>
+        <ComboBox x:Name="DepartingBox" HorizontalAlignment="Left" Margin="90,115,0,0" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.011,-0.198" SelectionChanged="ComboBox_SelectionChanged"/>
         <DatePicker x:Name="dateControl" HorizontalAlignment="Left" Margin="466,113,0,0" VerticalAlignment="Top" SelectedDateChanged="dateControl_SelectedDateChanged"/>
-        <Label Content="Arriving" HorizontalAlignment="Left" Margin="95,80,0,0" VerticalAlignment="Top"/>
-        <Label Content="Departing" HorizontalAlignment="Left" Margin="295,80,0,0" VerticalAlignment="Top"/>
+        <Label Content="Arriving" HorizontalAlignment="Left" Margin="274,80,0,0" VerticalAlignment="Top"/>
+        <Label Content="Departing" HorizontalAlignment="Left" Margin="125,80,0,0" VerticalAlignment="Top"/>
         <Label Content="Date" HorizontalAlignment="Left" Margin="485,80,0,0" VerticalAlignment="Top"/>
         <Label Content="Other flights" HorizontalAlignment="Left" Margin="355,249,0,0" VerticalAlignment="Top"/>
         <Label Content="Hours and minutes somehow" HorizontalAlignment="Left" Margin="609,80,0,0" VerticalAlignment="Top"/>
@@ -34,9 +34,9 @@
         <Button HorizontalAlignment="Left" Margin="147,190,0,0" VerticalAlignment="Top" Width="75">
             <Button x:Name="cancel" Content="Cancel" Width="75" Click="cancel_Click" RenderTransformOrigin="0.6,2.591"/>
         </Button>
-        <Button x:Name="update" Content="Update" HorizontalAlignment="Left" Margin="250,193,0,0" VerticalAlignment="Top" Width="75" IsEnabled="False"/>
-        <Button x:Name="delete" Content="Delete" HorizontalAlignment="Left" Margin="356,193,0,0" VerticalAlignment="Top" Width="75" IsEnabled="False" RenderTransformOrigin="-0.133,0.909"/>
-        <Button x:Name="create" Content="Create" HorizontalAlignment="Left" Margin="445,193,0,0" VerticalAlignment="Top" Width="75" IsEnabled="False"/>
+        <Button x:Name="update" Content="Update" HorizontalAlignment="Left" Margin="250,193,0,0" VerticalAlignment="Top" Width="75" IsEnabled="False" Click="Update_Click"/>
+        <Button x:Name="delete" Content="Delete" HorizontalAlignment="Left" Margin="356,193,0,0" VerticalAlignment="Top" Width="75" IsEnabled="False" RenderTransformOrigin="-0.133,0.909" Click="Delete_Click"/>
+        <Button x:Name="create" Content="Create" HorizontalAlignment="Left" Margin="445,193,0,0" VerticalAlignment="Top" Width="75" IsEnabled="False" Click="Create_Click"/>
         <TextBox x:Name="hoursBox" HorizontalAlignment="Left" Height="23" Margin="620,115,0,0" TextWrapping="Wrap" Text="00" VerticalAlignment="Top" Width="55" TextChanged="hoursBox_TextChanged"/>
         <TextBox x:Name="minutesBox" HorizontalAlignment="Left" Height="23" Margin="704,114,0,0" TextWrapping="Wrap" Text="00" VerticalAlignment="Top" Width="70" TextChanged="minutesBox_TextChanged"/>
 

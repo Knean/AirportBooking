@@ -46,6 +46,7 @@ namespace AirportBooking
             };
             newReservation = new Reservation();
             scheduleRows = ConnectionObject.LoadScheduleRows();
+            //never used???
             AirportRows = ConnectionObject.LoadAirports();
             // subscribe to changes to the reservation object
             newReservation.changeChecker.changeMadeEvent += disableBookingButton;

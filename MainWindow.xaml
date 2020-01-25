@@ -28,7 +28,7 @@
         <Button x:Name="createBooking" Content="Create booking" HorizontalAlignment="Left" Margin="352,219,0,0" VerticalAlignment="Top" Width="96" Click="CreateBooking_Click"/>
         <PasswordBox x:Name="PasswordBox" HorizontalAlignment="Left" Margin="699,195,0,0" VerticalAlignment="Top" Width="75" KeyDown="PasswordBox_KeyDown"/>
         <Border x:Name="successBorder" BorderBrush="#FF3BBD21" BorderThickness="10" HorizontalAlignment="Left" Height="110" Margin="70,295,0,0" VerticalAlignment="Top" Width="510">
-            <TextBlock x:Name="successMessage" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Height="90" Width="490" Foreground="#FF8AC06C" Background="{DynamicResource {x:Static SystemColors.InfoBrushKey}}" Margin="0.4,0.4,0,0"><Run Text="Success"/><InlineUIContainer>
+            <TextBlock x:Name="successMessage" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Height="90" Width="490" Foreground="#FF8AC06C" Background="{DynamicResource {x:Static SystemColors.InfoBrushKey}}" Margin="0.4,0.4,0,0" Visibility="Collapsed"><Run Text="Success"/><InlineUIContainer>
                     <Border BorderBrush="Black" BorderThickness="1" Height="5" Width="0"/>
                 </InlineUIContainer></TextBlock>
         </Border>
