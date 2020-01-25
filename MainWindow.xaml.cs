@@ -24,6 +24,7 @@ namespace AirportBooking
         public OleDbDataReader reader;
         public static List<ScheduleRow> scheduleRows;
         public static List<Airport> AirportRows;
+        public Dictionary<RadioButton,string> radioButtons;
         ScheduleRow selectedItem;
         //object soon to be inserted into the datatable
         Reservation newReservation;
@@ -31,10 +32,18 @@ namespace AirportBooking
         {
             //disable the reservation button until all fields are valid
             createBooking.IsEnabled = newReservation.isValid();
+            this.successMessage.Visibility = Visibility.Collapsed;
+            this.successBorder.Visibility = Visibility.Collapsed;
         }
         public MainWindow()
         {          
             InitializeComponent();
+            radioButtons = new Dictionary<RadioButton, string>()
+            {
+                { economyRadio,"Economy" },
+                {businessRadio, "Business" },
+                {firstRadio,"First" }
+            };
             newReservation = new Reservation();
             scheduleRows = ConnectionObject.LoadScheduleRows();
             AirportRows = ConnectionObject.LoadAirports();
@@ -58,7 +67,7 @@ namespace AirportBooking
             IEnumerable <ScheduleRow> arrivalRows = from flight in scheduleRows
                                                    where flight.Departing == selectedItem?.Departing
                                                    select flight;
-            this.arrivingBox.ItemsSource = arrivalRows;
+            this.arrivingBox.ItemsSource = arrivalRows.Distinct(new compareArrivals());
             this.arrivingBox.DisplayMemberPath = "ArrivingName";            
             newReservation.Departing = selectedItem?.Departing;            
         }
@@ -83,17 +92,16 @@ namespace AirportBooking
         private void TimeBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {           
             if (this.timeBox.SelectedItem != null)
-            {
+            {                
                 selectedItem = (ScheduleRow)this.timeBox.SelectedItem;
-                // disable radio buttons for unavailable seats
-                int businessSeats = Convert.ToInt32(selectedItem.Business);
-                this.businessRadio.IsEnabled = businessSeats ==0 ? false : true;
-
-                int economySeats = Convert.ToInt32(selectedItem.Economy);
-                this.economyRadio.IsEnabled = economySeats ==0 ?false : true;
-
-                int firstSeats = Convert.ToInt32(selectedItem.First);
-                this.firstRadio.IsEnabled = firstSeats ==0 ? false : true;
+                //disable radio buttons for seats that are sold out
+                foreach (KeyValuePair<RadioButton, string> item in radioButtons)
+                {
+                    //PropertyInfro.GetValue method to access property stored in a variable
+                    int seats = Convert.ToInt32(selectedItem.GetType().GetProperty(item.Value).GetValue(selectedItem, null));
+                    item.Key.IsEnabled = seats == 0 ? false : true;                     
+                }
+                //update the Reservation object with the selected Time and ID
                 newReservation.Time = selectedItem.Time;
                 newReservation.FlightNo = selectedItem.ID;
             }   
@@ -101,30 +109,24 @@ namespace AirportBooking
         }
 
 
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+        private void seatTypeChecked(object sender, RoutedEventArgs e)
         {
-  
+            RadioButton radio = sender as RadioButton;
+            //the value stored on the Reservation object is different from radio controls name
+            switch (radio.Name)
+            {
+                case "economyRadio":
+                    newReservation.SeatClass = "Economy";
+                    break;
+                case "businessRadio":
+                    newReservation.SeatClass = "Business";
+                    break;
+                case "firstRadio":
+                    newReservation.SeatClass = "First";
+                    break;
+            }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-         
-        }
-        private void EconomyRadio_Checked(object sender, RoutedEventArgs e)
-        {
-            newReservation.SeatClass = "Economy";
-        }
-    
-        private void businessRadio_Checked(object sender, RoutedEventArgs e)
-        {
-            newReservation.SeatClass = "Business";
-        }
-
-        private void firstRadio_Checked(object sender, RoutedEventArgs e)
-        {
-            newReservation.SeatClass = "FirstClass";
-        }
         private void passengerName_KeyUp(object sender, KeyEventArgs e)
         {
             TextBox box = sender as TextBox;
@@ -132,50 +134,63 @@ namespace AirportBooking
         }
         private void CreateBooking_Click(object sender, RoutedEventArgs e)
         {
+            // pick the selected flight from the times combo box
             ScheduleRow flight = this.timeBox.SelectedItem as ScheduleRow;
+            //updates the reservations table
             ConnectionObject.CreateBooking(newReservation);
+            //updates the sql database and the local variable
             ConnectionObject.RemoveSeat(newReservation.SeatClass, flight);
-            
+ 
+            string successText =
+                $"Success! You've booked {(newReservation.SeatClass == "First" ? "a" : "an")} {newReservation.SeatClass} seat on the flight {selectedItem} for {newReservation.PassengerName}" +
+                $"{System.Environment.NewLine}Reference Number: {newReservation.Reference}";
+            //reset the reservation object
             newReservation = new Reservation();
+            //resubscribe to the new reservation object
             newReservation.changeChecker.changeMadeEvent += disableBookingButton;
-            //reset the form fields
+            //reset the text boxes
             this.passengerName.Text = null;
             this.passportNo.Text = null;           
             this.passengerName.Text = null;
-            this.departuresBox.SelectedItem = null;
-
-            //put them in a list do stuff for each of them
-
-            this.economyRadio.IsChecked = false;
-            this.businessRadio.IsChecked = false;
-            this.firstRadio.IsChecked = false;
-            
-            //connectionobject.removeseat(reservation)
+            this.departuresBox.SelectedItem = null;            
+     
+            //uncheck all seat class controls
+            foreach (KeyValuePair<RadioButton, string> item in radioButtons)
+            {
+                item.Key.IsChecked = false;
+               
+            }
+           //display the success message
+            this.successMessage.Text = successText;
+            MessageBox.Show(this.successBorder.IsVisible.ToString());
+            this.successBorder.Visibility = Visibility.Visible;
+            MessageBox.Show(this.successBorder.IsVisible.ToString());
+            this.successMessage.Visibility = Visibility.Visible;
+            this.UpdateLayout();
         }
 
         private void passwordEntered(object sender, RoutedEventArgs e)
         {
-            //password is seesharp
-            string secretPassword = "1463063956";
+            //hash string for the password: seesharp
+            string passwordHash = "1463063956";
 
-            string password = this.PasswordBox.Password.GetHashCode().ToString();
+            string inputHash = this.PasswordBox.Password.GetHashCode().ToString();
             //MessageBox.Show((password == secretPassword).ToString());
             this.PasswordBox.Password = null;
-            if (password == secretPassword){                
+            if (inputHash == passwordHash){                
                 Page flightsPage = new FlightsPage();
                 this.Content = flightsPage;
             }
         }
 
+        //attempt to log in if enter is pressed
         private void PasswordBox_KeyDown(object sender, KeyEventArgs e)
         {
             if( e.Key == Key.Enter)
             {
                 this.passwordEntered(sender, e);
-            }
-           
-        }
-        // everything under this is flight schedule logic
+            }           
+        }     
 
     }
 }

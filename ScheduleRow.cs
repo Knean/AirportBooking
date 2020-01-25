@@ -23,7 +23,7 @@ namespace AirportBooking
         public string getString { get { return this.ToString(); } }
         public   override string ToString()
         {
-            return $"From {this.DepartingName} flying to {this.ArrivingName} on: {Date} {Time}";
+            return $"From {this.DepartingName} flying to {this.ArrivingName} on: {Time}";
         }
         public ScheduleRow()
         {
@@ -43,6 +43,11 @@ namespace AirportBooking
             {
                 return true;
             }
+        }
+
+        public void removeSeat(string seat) {
+            int newSeatNumber = Convert.ToInt32(this.GetType().GetProperty(seat).GetValue(this)) -1;
+            this.GetType().GetProperty(seat).SetValue(this, newSeatNumber.ToString());
         }
     }
 

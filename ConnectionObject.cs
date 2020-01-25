@@ -41,7 +41,7 @@ namespace AirportBooking
             }
         }
 
-        public static void RemoveSeat(string seatClass, ScheduleRow flight)
+        public static ScheduleRow RemoveSeat(string seatClass, ScheduleRow flight)
         {
             OleDbCommand command;
             int economy = Convert.ToInt32(flight.Economy);
@@ -51,13 +51,14 @@ namespace AirportBooking
             switch (seatClass)
             {
                 case "Economy":
-                    economy= 0;
+                    flight.Economy = (Convert.ToInt32(flight.Economy) - 1).ToString();
                     break;
                 case "Business":
-                    business = 0;
+                    flight.Business = (Convert.ToInt32(flight.Business) - 1).ToString();
+
                     break;
-                case "FirstClass":
-                    first= 0;
+                case "First":
+                    flight.First = (Convert.ToInt32(flight.First) - 1).ToString();
                     break;
             }
             using (var conn = new OleDbConnection(ConnectionObject.connectionString))
@@ -66,10 +67,10 @@ namespace AirportBooking
                 try
                 {
                     command = new OleDbCommand("UPDATE CyanairScheduleExtended SET [Economy] = @economyVar, Business = @businessVar, [First] = @firstVar WHERE ID = @flightNoVar", conn);
-                    command.Parameters.AddWithValue("economyVar", economy);
-                    command.Parameters.AddWithValue("businessVar",business);
-                    command.Parameters.AddWithValue("firstVar",first);
-                    command.Parameters.AddWithValue("flightNoVar", 1);      
+                    command.Parameters.AddWithValue("economyVar", flight.Economy);
+                    command.Parameters.AddWithValue("businessVar",flight.Business);
+                    command.Parameters.AddWithValue("firstVar",flight.First);
+                    command.Parameters.AddWithValue("flightNoVar", flight.ID);      
 
                     var mario = command.ExecuteNonQuery();
                     MessageBox.Show(mario.ToString());
@@ -80,6 +81,7 @@ namespace AirportBooking
                 }
 
             }
+            return flight;
         }
 
         public static List<ScheduleRow> LoadScheduleRows()
