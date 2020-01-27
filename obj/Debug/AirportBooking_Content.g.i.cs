@@ -8,6 +8,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("airplanes.accdb")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("airline.jpg")]
 
 

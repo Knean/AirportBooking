@@ -143,7 +143,7 @@ namespace AirportBooking
             ConnectionObject.RemoveSeat(newReservation.SeatClass, flight);
  
             string successText =
-                $"Success! You've booked {(newReservation.SeatClass == "First" ? "a" : "an")} {newReservation.SeatClass} seat on the flight {selectedItem} for {newReservation.PassengerName}" +
+                $"Success! You've booked {(newReservation.SeatClass == "Economy" ? "an" : "a")} {newReservation.SeatClass} seat on the flight {selectedItem} for {newReservation.PassengerName}" +
                 $"{System.Environment.NewLine}Reference Number: {newReservation.Reference}";
             //reset the reservation object
             newReservation = new Reservation();
@@ -163,9 +163,9 @@ namespace AirportBooking
             }
            //display the success message
             this.successMessage.Text = successText;
-            MessageBox.Show(this.successBorder.IsVisible.ToString());
+            
             this.successBorder.Visibility = Visibility.Visible;
-            MessageBox.Show(this.successBorder.IsVisible.ToString());
+            
             this.successMessage.Visibility = Visibility.Visible;
             this.UpdateLayout();
         }

@@ -38,6 +38,7 @@ namespace AirportBooking
         {
 
             InitializeComponent();
+            this.dateControl.SelectedDate = DateTime.Now.Date;
             airports = ConnectionObject.LoadAirports();
             //airportDictionary = new Dictionary<string, string>();
             //foreach (Airport airport in airports)
@@ -106,8 +107,16 @@ namespace AirportBooking
 
          
             }
+            //only arriving is selected
+            if (selectedItem.Arriving != null && selectedItem.Departing == null && editMode == false)
+            {
+                //pointlesss               
+                listViewRows = listViewRows.Where(flight => flight.Arriving == selectedItem.Arriving);
+
+
+            }
             //nothing is selected
-            if(selectedItem.Departing == null && selectedItem.Arriving == null && editMode ==false)
+            if (selectedItem.Departing == null && selectedItem.Arriving == null && editMode ==false)
             {
                 
                 listViewRows = from flight in scheduleRows
@@ -148,20 +157,7 @@ namespace AirportBooking
             somethingChanged();
         }
 
-        private void cancel_Click(object sender, RoutedEventArgs e)
-        {
-            listViewRows = from flight in scheduleRows
-                           select flight;
-            this.selectedItem = new ScheduleRow();          
-            this.FlightsList.SelectedItem = null;
-            this.DepartingBox.SelectedItem = null;
-            this.ArrivingBox.SelectedItem = null;
-            editMode = false;
-            this.create.IsEnabled = false;
-            this.update.IsEnabled = false;
-            this.dateControl.SelectedDate = null;
-            filterRows();
-        }
+
 
        
         private void FlightsList_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -201,12 +197,9 @@ namespace AirportBooking
         }
 
         private void dateControl_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
-        {         
-          
-            addDate();           
+        {
 
-            filterRows();
-
+            somethingChanged();
         }
 
         private void addDate()
@@ -217,6 +210,7 @@ namespace AirportBooking
                 datestring = datestring.AddHours(Convert.ToDouble(this.hoursBox.Text));
                 datestring = datestring.AddMinutes(Convert.ToDouble(this.minutesBox.Text));
                 selectedItem.Time = datestring.ToString();
+        
                 
                // MessageBox.Show(datestring.ToString());
             }
@@ -251,6 +245,13 @@ namespace AirportBooking
                     this.delete.IsEnabled = selectedHasID;
               
                 }
+                else
+                {
+                    this.create.IsEnabled = false;
+                    bool selectedHasID = this.selectedItem.ID != null ? true : false; ;
+                    this.update.IsEnabled = false;
+                    this.delete.IsEnabled = selectedHasID;
+                }
                 filterRows();                
             }         
 
@@ -271,7 +272,7 @@ namespace AirportBooking
             scheduleRows = ConnectionObject.LoadScheduleRows();           
             selectedItem = new ScheduleRow();
             editMode = false;
-            filterRows();
+            somethingChanged();
         }
 
         private void Delete_Click(object sender, RoutedEventArgs e)
@@ -283,6 +284,22 @@ namespace AirportBooking
             FlightsList.SelectedItem = null;
             somethingChanged();          
   
+        }
+
+        private void cancel_Click(object sender, RoutedEventArgs e)
+        {
+            this.dateControl.SelectedDate = DateTime.Now.Date;
+            listViewRows = from flight in scheduleRows
+                           select flight;
+            this.selectedItem = new ScheduleRow();
+            this.FlightsList.SelectedItem = null;
+            this.DepartingBox.SelectedItem = null;
+            this.ArrivingBox.SelectedItem = null;
+            editMode = false;
+            this.create.IsEnabled = false;
+            this.update.IsEnabled = false;
+            this.dateControl.SelectedDate = DateTime.Now.Date;
+            filterRows();
         }
     }
 }

@@ -13,13 +13,16 @@
 
 
     </Window.Resources>
+    <Window.Background>
+        <ImageBrush ImageSource="Airline.jpg"/>
+    </Window.Background>
     <Grid Margin="0,0,3.6,-0.2" >
-        <ComboBox x:Name="departuresBox"  HorizontalAlignment="Left" Margin="106,47,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="DeparturesBox_SelectionChanged"/>
-        <ComboBox x:Name="arrivingBox" HorizontalAlignment="Left" Margin="304,47,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="ArrivingBox_SelectionChanged"/>
-        <ComboBox x:Name="timeBox" HorizontalAlignment="Left" Margin="486,47,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="TimeBox_SelectionChanged"/>
-        <RadioButton x:Name="economyRadio" Content="Economy Class seat" HorizontalAlignment="Left" Margin="89,141,0,0" VerticalAlignment="Top" Checked="seatTypeChecked"/>
-        <RadioButton x:Name="businessRadio" Content="Business Class seat" HorizontalAlignment="Left" Margin="89,180,0,0" VerticalAlignment="Top" Checked="seatTypeChecked"/>
-        <RadioButton x:Name="firstRadio" Content="First Class seat" HorizontalAlignment="Left" Margin="89,221,0,0" VerticalAlignment="Top" Checked="seatTypeChecked"/>
+        <ComboBox x:Name="departuresBox"  HorizontalAlignment="Left" Margin="85,135,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="DeparturesBox_SelectionChanged"/>
+        <ComboBox x:Name="arrivingBox" HorizontalAlignment="Left" Margin="85,209,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="ArrivingBox_SelectionChanged"/>
+        <ComboBox x:Name="timeBox" HorizontalAlignment="Left" Margin="85,281,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="TimeBox_SelectionChanged"/>
+        <RadioButton x:Name="economyRadio" Content="Economy Class seat" HorizontalAlignment="Left" Margin="490,317,0,0" VerticalAlignment="Top" Checked="seatTypeChecked"/>
+        <RadioButton x:Name="businessRadio" Content="Business Class seat" HorizontalAlignment="Left" Margin="515,370,0,0" VerticalAlignment="Top" Checked="seatTypeChecked"/>
+        <RadioButton x:Name="firstRadio" Content="First Class seat" HorizontalAlignment="Left" Margin="538,410,0,0" VerticalAlignment="Top" Checked="seatTypeChecked"/>
         <Button x:Name="EditFlights" Content="Edit flights =>" HorizontalAlignment="Left" Margin="699,236,0,0" VerticalAlignment="Top" Width="75" Click="passwordEntered"/>
         <TextBox x:Name="passengerName" HorizontalAlignment="Left" Height="23" Margin="360,139,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" KeyUp="passengerName_KeyUp"/>
         <TextBox x:Name="passportNo" HorizontalAlignment="Left" Height="23" Margin="360,180,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
@@ -27,11 +30,16 @@
         <Label Content="Passport Number" HorizontalAlignment="Left" Margin="253,180,0,0" VerticalAlignment="Top"/>
         <Button x:Name="createBooking" Content="Create booking" HorizontalAlignment="Left" Margin="352,219,0,0" VerticalAlignment="Top" Width="96" Click="CreateBooking_Click"/>
         <PasswordBox x:Name="PasswordBox" HorizontalAlignment="Left" Margin="699,195,0,0" VerticalAlignment="Top" Width="75" KeyDown="PasswordBox_KeyDown"/>
-        <Border x:Name="successBorder" BorderBrush="#FF3BBD21" BorderThickness="10" HorizontalAlignment="Left" Height="110" Margin="70,295,0,0" VerticalAlignment="Top" Width="510">
+        <Border x:Name="successBorder" BorderBrush="#FF3BBD21" BorderThickness="10" HorizontalAlignment="Left" Height="110" Margin="70,295,0,0" VerticalAlignment="Top" Width="510" Visibility="Collapsed">
             <TextBlock x:Name="successMessage" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Height="90" Width="490" Foreground="#FF8AC06C" Background="{DynamicResource {x:Static SystemColors.InfoBrushKey}}" Margin="0.4,0.4,0,0" Visibility="Collapsed"><Run Text="Success"/><InlineUIContainer>
                     <Border BorderBrush="Black" BorderThickness="1" Height="5" Width="0"/>
                 </InlineUIContainer></TextBlock>
         </Border>
+        <Label Content="DEPARTURE" HorizontalAlignment="Left" Margin="80,101,0,0" VerticalAlignment="Top" FontSize="14" Foreground="#FF020000" ForceCursor="True"/>
+        <Label Content="" HorizontalAlignment="Left" Margin="85,250,0,0" VerticalAlignment="Top"/>
+        <Label Content="ARRIVAL" HorizontalAlignment="Left" Margin="80,175,0,0" VerticalAlignment="Top" FontSize="14" Foreground="#FF020000" ForceCursor="True"/>
+        <Label Content="DATE" HorizontalAlignment="Left" Margin="80,250,0,0" VerticalAlignment="Top" FontSize="14" Foreground="#FF020000" ForceCursor="True"/>
+        <GroupBox Header="FLIGHTS" HorizontalAlignment="Left" Height="265" Margin="70,80,0,0" VerticalAlignment="Top" Width="155" Foreground="White" BorderBrush="#FF99A6AE" Focusable="True"/>
 
     </Grid>
 </Window>

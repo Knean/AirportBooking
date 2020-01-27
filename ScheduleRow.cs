@@ -35,7 +35,8 @@ namespace AirportBooking
             if(
                 this.Departing == null ||
                 this.Arriving == null||
-                this.Time == null)
+                this.Time == null||
+                this.Departing == this.Arriving)
             {
                 return false;
             }
