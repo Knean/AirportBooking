@@ -163,7 +163,7 @@ namespace AirportBooking
             }
            //display the success message
             this.successMessage.Text = successText;
-            
+            MessageBox.Show(this.successBorder.IsVisible.ToString());
             this.successBorder.Visibility = Visibility.Visible;
             
             this.successMessage.Visibility = Visibility.Visible;

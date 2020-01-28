@@ -17,29 +17,33 @@
         <ImageBrush ImageSource="Airline.jpg"/>
     </Window.Background>
     <Grid Margin="0,0,3.6,-0.2" >
-        <ComboBox x:Name="departuresBox"  HorizontalAlignment="Left" Margin="85,135,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="DeparturesBox_SelectionChanged"/>
-        <ComboBox x:Name="arrivingBox" HorizontalAlignment="Left" Margin="85,209,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="ArrivingBox_SelectionChanged"/>
-        <ComboBox x:Name="timeBox" HorizontalAlignment="Left" Margin="85,281,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="TimeBox_SelectionChanged"/>
-        <RadioButton x:Name="economyRadio" Content="Economy Class seat" HorizontalAlignment="Left" Margin="490,317,0,0" VerticalAlignment="Top" Checked="seatTypeChecked"/>
-        <RadioButton x:Name="businessRadio" Content="Business Class seat" HorizontalAlignment="Left" Margin="515,370,0,0" VerticalAlignment="Top" Checked="seatTypeChecked"/>
-        <RadioButton x:Name="firstRadio" Content="First Class seat" HorizontalAlignment="Left" Margin="538,410,0,0" VerticalAlignment="Top" Checked="seatTypeChecked"/>
-        <Button x:Name="EditFlights" Content="Edit flights =>" HorizontalAlignment="Left" Margin="699,236,0,0" VerticalAlignment="Top" Width="75" Click="passwordEntered"/>
-        <TextBox x:Name="passengerName" HorizontalAlignment="Left" Height="23" Margin="360,139,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" KeyUp="passengerName_KeyUp"/>
-        <TextBox x:Name="passportNo" HorizontalAlignment="Left" Height="23" Margin="360,180,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-        <Label Content="Passenger Name" HorizontalAlignment="Left" Margin="253,139,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.239,0.017"/>
-        <Label Content="Passport Number" HorizontalAlignment="Left" Margin="253,180,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="createBooking" Content="Create booking" HorizontalAlignment="Left" Margin="352,219,0,0" VerticalAlignment="Top" Width="96" Click="CreateBooking_Click"/>
-        <PasswordBox x:Name="PasswordBox" HorizontalAlignment="Left" Margin="699,195,0,0" VerticalAlignment="Top" Width="75" KeyDown="PasswordBox_KeyDown"/>
-        <Border x:Name="successBorder" BorderBrush="#FF3BBD21" BorderThickness="10" HorizontalAlignment="Left" Height="110" Margin="70,295,0,0" VerticalAlignment="Top" Width="510" Visibility="Collapsed">
-            <TextBlock x:Name="successMessage" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Height="90" Width="490" Foreground="#FF8AC06C" Background="{DynamicResource {x:Static SystemColors.InfoBrushKey}}" Margin="0.4,0.4,0,0" Visibility="Collapsed"><Run Text="Success"/><InlineUIContainer>
+        <ComboBox x:Name="departuresBox"  HorizontalAlignment="Left" Margin="65,195,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="DeparturesBox_SelectionChanged"/>
+        <ComboBox x:Name="arrivingBox" HorizontalAlignment="Left" Margin="65,269,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="ArrivingBox_SelectionChanged"/>
+        <ComboBox x:Name="timeBox" HorizontalAlignment="Left" Margin="65,341,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="TimeBox_SelectionChanged"/>
+        <RadioButton x:Name="economyRadio" Content="Economy Class " HorizontalAlignment="Left" Margin="240,198,0,0" VerticalAlignment="Top" Checked="seatTypeChecked" FontSize="14"/>
+        <RadioButton x:Name="businessRadio" Content="Business Class " HorizontalAlignment="Left" Margin="240,235,0,0" VerticalAlignment="Top" Checked="seatTypeChecked" FontSize="14"/>
+        <RadioButton x:Name="firstRadio" Content="First Class " HorizontalAlignment="Left" Margin="240,276,0,0" VerticalAlignment="Top" Checked="seatTypeChecked" FontSize="14"/>
+        <Button x:Name="EditFlights" Content="LOGIN" HorizontalAlignment="Left" Margin="660,16,0,0" VerticalAlignment="Top" Width="75" Click="passwordEntered" MinWidth="100" Foreground="White" ForceCursor="True" Background="Black"/>
+        <TextBox x:Name="passengerName" HorizontalAlignment="Left" Height="23" Margin="427,194,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" KeyUp="passengerName_KeyUp"/>
+        <TextBox x:Name="passportNo" HorizontalAlignment="Left" Height="23" Margin="427,272,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <Label Content="FULL NAME" HorizontalAlignment="Left" Margin="422,161,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.239,0.017" FontSize="14"/>
+        <Label Content="PASSPORT NUMBER" HorizontalAlignment="Left" Margin="423,237,0,0" VerticalAlignment="Top" FontSize="14"/>
+        <Button x:Name="createBooking" Content="BOOK" HorizontalAlignment="Left" Margin="590,459,0,0" VerticalAlignment="Top" Width="96" Click="CreateBooking_Click" Padding="10" FontSize="14" Background="#FFFF7B54" Foreground="White" FontWeight="Bold" MinWidth="170" BorderBrush="#FF8D3A1B" Cursor="Pen" ToolTip="Click here to book"/>
+        <PasswordBox x:Name="PasswordBox" HorizontalAlignment="Left" Margin="580,16,0,0" VerticalAlignment="Top" Width="75" KeyDown="PasswordBox_KeyDown"/>
+        <Border x:Name="successBorder" BorderBrush="White" BorderThickness="10" HorizontalAlignment="Left" Height="110" Margin="70,600,-3,0" VerticalAlignment="Top" Width="510" Opacity="0.6" Visibility="Collapsed">
+            <TextBlock x:Name="successMessage" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Height="90" Width="490" Foreground="White" Margin="0.4,0.4,0,0" Visibility="Collapsed" Opacity="0.8" Background="Black" FontSize="14" FontStyle="Italic" TextAlignment="Center"><Run Text="Success"/><InlineUIContainer>
                     <Border BorderBrush="Black" BorderThickness="1" Height="5" Width="0"/>
                 </InlineUIContainer></TextBlock>
         </Border>
-        <Label Content="DEPARTURE" HorizontalAlignment="Left" Margin="80,101,0,0" VerticalAlignment="Top" FontSize="14" Foreground="#FF020000" ForceCursor="True"/>
-        <Label Content="" HorizontalAlignment="Left" Margin="85,250,0,0" VerticalAlignment="Top"/>
-        <Label Content="ARRIVAL" HorizontalAlignment="Left" Margin="80,175,0,0" VerticalAlignment="Top" FontSize="14" Foreground="#FF020000" ForceCursor="True"/>
-        <Label Content="DATE" HorizontalAlignment="Left" Margin="80,250,0,0" VerticalAlignment="Top" FontSize="14" Foreground="#FF020000" ForceCursor="True"/>
-        <GroupBox Header="FLIGHTS" HorizontalAlignment="Left" Height="265" Margin="70,80,0,0" VerticalAlignment="Top" Width="155" Foreground="White" BorderBrush="#FF99A6AE" Focusable="True"/>
+        <Label Content="DEPARTURE" HorizontalAlignment="Left" Margin="60,161,0,0" VerticalAlignment="Top" FontSize="14" Foreground="#FF020000" ForceCursor="True"/>
+        <Label Content="" HorizontalAlignment="Left" Margin="65,310,0,0" VerticalAlignment="Top"/>
+        <Label Content="ARRIVAL" HorizontalAlignment="Left" Margin="60,235,0,0" VerticalAlignment="Top" FontSize="14" Foreground="#FF020000" ForceCursor="True"/>
+        <Label Content="DATE" HorizontalAlignment="Left" Margin="60,310,0,0" VerticalAlignment="Top" FontSize="14" Foreground="#FF020000" ForceCursor="True"/>
+        <GroupBox Header="FLIGHTS" HorizontalAlignment="Left" Height="265" Margin="50,140,0,0" VerticalAlignment="Top" Width="155" Foreground="White" BorderBrush="#FF99A6AE" Focusable="True"/>
+        <GroupBox Header="SEATS" HorizontalAlignment="Left" Height="265" Margin="225,140,0,0" VerticalAlignment="Top" Width="155" Foreground="White" BorderBrush="#FF99A6AE" Focusable="True"/>
+        <GroupBox Header="PASSENGER" HorizontalAlignment="Left" Height="265" Margin="405,140,0,0" VerticalAlignment="Top" Width="170" Foreground="White"/>
+        <Label Content="CYANAIR - Airlines" HorizontalAlignment="Left" Margin="62,10,0,0" VerticalAlignment="Top" Foreground="#FFFDFDFD" FontSize="36" FontFamily="Levenim MT" FontStretch="ExtraExpanded" FontWeight="ExtraBold"/>
+        <Label Content="Admin" HorizontalAlignment="Left" Margin="530,12,0,0" VerticalAlignment="Top" Foreground="White"/>
 
     </Grid>
 </Window>

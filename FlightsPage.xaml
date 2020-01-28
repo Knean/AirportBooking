@@ -6,39 +6,44 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:AirportBooking"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="643" d:DesignWidth="800"
       Title="FlightsPage">
 
-    <Grid>
+    <Grid Margin="0,0,3,0" MinHeight="750" MinWidth="797" Height="623" VerticalAlignment="Top">
+        <Grid.Background>
+            <ImageBrush ImageSource="Airline.jpg"/>
+        </Grid.Background>
         <Grid.RowDefinitions>
-            <RowDefinition Height="71*"/>
-            <RowDefinition Height="19*"/>
+            <RowDefinition Height="322*"/>
+            <RowDefinition Height="53*"/>
         </Grid.RowDefinitions>
-        <ComboBox x:Name="ArrivingBox" HorizontalAlignment="Left" Margin="259,113,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="ArrivingBox_SelectionChanged">
+        <ComboBox x:Name="ArrivingBox" HorizontalAlignment="Left" Margin="230,151,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="ArrivingBox_SelectionChanged" Height="22">
 
         </ComboBox>
-        <ComboBox x:Name="DepartingBox" HorizontalAlignment="Left" Margin="90,115,0,0" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.011,-0.198" SelectionChanged="ComboBox_SelectionChanged"/>
-        <DatePicker x:Name="dateControl" HorizontalAlignment="Left" Margin="466,113,0,0" VerticalAlignment="Top" SelectedDateChanged="dateControl_SelectedDateChanged"/>
-        <Label Content="Arriving" HorizontalAlignment="Left" Margin="274,80,0,0" VerticalAlignment="Top"/>
-        <Label Content="Departing" HorizontalAlignment="Left" Margin="125,80,0,0" VerticalAlignment="Top"/>
-        <Label Content="Date" HorizontalAlignment="Left" Margin="485,80,0,0" VerticalAlignment="Top"/>
-        <Label Content="Other flights" HorizontalAlignment="Left" Margin="355,249,0,0" VerticalAlignment="Top"/>
-        <Label Content="Hours and minutes somehow" HorizontalAlignment="Left" Margin="609,80,0,0" VerticalAlignment="Top"/>
-        <ListView x:Name="FlightsList" Margin="0,305,280,44.6" Grid.RowSpan="2" HorizontalAlignment="Right" Width="395" AutomationProperties.IsColumnHeader="True" MouseLeftButtonUp="FlightsList_MouseLeftButtonUp"  >
+        <ComboBox x:Name="DepartingBox" HorizontalAlignment="Left" Margin="85,151,0,0" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.011,-0.198" SelectionChanged="ComboBox_SelectionChanged" Height="22"/>
+        <DatePicker x:Name="dateControl" HorizontalAlignment="Left" Margin="369,149,0,0" VerticalAlignment="Top" SelectedDateChanged="dateControl_SelectedDateChanged" Width="112" Height="24"/>
+        <Label Content="ARRIVING" HorizontalAlignment="Left" Margin="229,116,0,0" VerticalAlignment="Top" FontSize="14" Height="29" Width="72"/>
+        <Label Content="DEPARTING" HorizontalAlignment="Left" Margin="83,116,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.317,5.385" FontSize="14" Height="29" Width="83"/>
+        <Label Content="DATE" HorizontalAlignment="Left" Margin="365,116,0,0" VerticalAlignment="Top" FontSize="14" Height="29" Width="43"/>
+        <Label Content="LIST VIEW OF FLIGHTS" HorizontalAlignment="Left" Margin="52,249,0,0" VerticalAlignment="Top" Height="26" Width="128"/>
+        <Label Content="HOURS / MINUTES" HorizontalAlignment="Left" Margin="512,117,0,0" VerticalAlignment="Top" Foreground="White" FontSize="14" Height="29" Width="127"/>
+        <ListView x:Name="FlightsList" Margin="0,280,255,40" HorizontalAlignment="Right" Width="490" AutomationProperties.IsColumnHeader="True" MouseLeftButtonUp="FlightsList_MouseLeftButtonUp"  >
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button HorizontalAlignment="Left" Margin="147,190,0,0" VerticalAlignment="Top" Width="75">
-            <Button x:Name="cancel" Content="Cancel" Width="75" Click="cancel_Click" RenderTransformOrigin="0.6,2.591"/>
-        </Button>
-        <Button x:Name="update" Content="Update" HorizontalAlignment="Left" Margin="250,193,0,0" VerticalAlignment="Top" Width="75" IsEnabled="False" Click="Update_Click"/>
-        <Button x:Name="delete" Content="Delete" HorizontalAlignment="Left" Margin="356,193,0,0" VerticalAlignment="Top" Width="75" IsEnabled="False" RenderTransformOrigin="-0.133,0.909" Click="Delete_Click"/>
-        <Button x:Name="create" Content="Create" HorizontalAlignment="Left" Margin="445,193,0,0" VerticalAlignment="Top" Width="75" IsEnabled="False" Click="Create_Click"/>
-        <TextBox x:Name="hoursBox" HorizontalAlignment="Left" Height="23" Margin="620,115,0,0" TextWrapping="Wrap" Text="00" VerticalAlignment="Top" Width="55" TextChanged="hoursBox_TextChanged"/>
-        <TextBox x:Name="minutesBox" HorizontalAlignment="Left" Height="23" Margin="704,114,0,0" TextWrapping="Wrap" Text="00" VerticalAlignment="Top" Width="70" TextChanged="minutesBox_TextChanged"/>
+
+        <Button x:Name="cancel" Content="Cancel" Click="cancel_Click" Margin="577,280,120,314" Width="100" Height="40" BorderBrush="#FFE04826" Background="#FFFF831B" />
+
+        <Button x:Name="update" Content="Update" HorizontalAlignment="Left" Margin="577,340,0,0" VerticalAlignment="Top" Width="100" Click="Update_Click" Height="40" BorderBrush="#FFD44040" Background="#FFFF831B" IsEnabled="False" Foreground="Black"/>
+        <Button x:Name="delete" Content="Delete" HorizontalAlignment="Left" Margin="577,394,0,0" VerticalAlignment="Top" Width="100" IsEnabled="False" RenderTransformOrigin="-0.133,0.909" Click="Delete_Click" Height="40" Background="#FFFF831B" Foreground="Black"/>
+        <Button x:Name="create" Content="Create" HorizontalAlignment="Left" Margin="577,452,0,0" VerticalAlignment="Top" Width="100" IsEnabled="False" Click="Create_Click" Height="40" Foreground="Black" Background="#FFFF831B" OpacityMask="#FF535252"/>
+        <TextBox x:Name="hoursBox" HorizontalAlignment="Left" Height="23" Margin="512,148,0,0" TextWrapping="Wrap" Text="00" VerticalAlignment="Top" Width="55" TextChanged="hoursBox_TextChanged"/>
+        <TextBox x:Name="minutesBox" HorizontalAlignment="Left" Height="23" Margin="572,149,0,0" TextWrapping="Wrap" Text="00" VerticalAlignment="Top" Width="70" TextChanged="minutesBox_TextChanged"/>
+        <Label Content="CYANAIR - Admin" HorizontalAlignment="Left" Margin="70,20,0,0" VerticalAlignment="Top" Foreground="#FFFDFDFD" FontSize="36" FontFamily="Levenim MT" FontStretch="ExtraExpanded" FontWeight="ExtraBold" Height="60" Width="328"/>
+        <GroupBox Header="EDIT FLIGHT SCHEDULE" HorizontalAlignment="Left" Height="122" Margin="52,87,0,0" VerticalAlignment="Top" Width="625" Foreground="White" FontSize="14"/>
 
 
     </Grid>
